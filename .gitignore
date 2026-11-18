@@ -2,3 +2,5 @@ feuille-de-route/
 vendor/
 .phpunit.cache/
 .phpunit.result.cache/
+# Crée aussi un fichier .phpunit.result.cache
+.phpunit.result.cache

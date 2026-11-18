@@ -1,0 +1,31 @@
+name: Test
+on:
+  # Can start this workflow anytime manually
+  workflow_dispatch:
+  # Will automatically run when pushing in the following folders
+  push:
+    paths:
+      - inc/**
+      - partiel/**
+      - tests/**
+      - composer.json
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkouts this repository
+      - uses: actions/checkout@v6
+
+      # Download PHP to execute test script
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      # Do not ensure script is executable, let the library do it
+      - name: Test
+        run: composer test
