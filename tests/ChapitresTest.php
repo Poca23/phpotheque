@@ -11,6 +11,11 @@ class ChapitresTest extends TestCase
         $this->assertNotEmpty(chapitres());
     }
 
+    public function testIlYADouzeChapitres()
+    {
+        $this->assertCount(12, chapitres());
+    }
+
     public function testChaqueChapitreATitreEtCouleur()
     {
         foreach (chapitres() as $chapitre) {

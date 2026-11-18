@@ -1,0 +1,36 @@
+.formulaire {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.formulaire label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.formulaire input,
+.formulaire textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.formulaire button {
+  cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #6b4226;
+  color: #fff;
+}
+
+.formulaire button:hover {
+  background: #8e5a2b;
+}

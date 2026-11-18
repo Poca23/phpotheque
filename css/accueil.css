@@ -1,0 +1,44 @@
+.intro {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.cartes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.carte {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.carte span {
+  font-size: 2.5rem;
+}
+
+.bouton {
+  display: inline-block;
+  background: #6b4226;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+
+.bouton:hover {
+  background: #8e5a2b;
+}
+
+@media (max-width: 600px) {
+  .cartes {
+    grid-template-columns: 1fr;
+  }
+}

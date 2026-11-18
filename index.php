@@ -1,57 +1,33 @@
-<?php 
-// include : PHP essaye de charger le fichier
-//     S'il existe pas, PHP met un warning
-// require : PHP essaye de charger le fichier
-//     S'il existe pas, PHP crashe
-// Si on ajoute "_once" : on peut pas l'importer
-//     plusieurs fois dans le cours de la génération
-//     du HTML. PHP ignore si on essaye de le faire
-require_once 'inc/fonctions.php';
-// On appelle la fonction "accueil"
-// Je peux appeler cette fonction parce que j'ai
-// déjà importé le fichier fonctions.php avant,
-// et c'est ce fichier-là qui contient la fonction
-// "accueil". Si j'inverse les lignes, ça marche plus.
+<?php
 
-// Ce tableau là, est un peu différent de la
-// déclaration d'une variable. Ce qu'on dit à PHP,
-// c'est : "cette fonction renvoie un tableau. Chaque
-// case que le tableau renvoie, ben tu crées une
-// variable avec le nom que j'ai dit ($titre, $titrePrincipal, ...),
-// et tu mets dans ces variables les cases correspondantes
-// du tableau qu'on te renvoie.
-// On parle parfois de "déstructuration".
-[
-    $titre, 
-    $titrePrincipal,
-    $para1,
-    $competences,
-    $ilPleut,
-    $css
-] = accueil();
+require_once 'inc/main.php';
+require_once 'inc/vues.php';
 
-// On importe le "haut" de la page
-require_once 'partiel/header.php'; 
+[$titre, $css] = accueil();
 
-// Au milieu, c'est le code spécifique à la page
-?>
+afficherPage($titre, $css, function () { ?>
+    <section class="intro">
+        <h2>Bienvenue à la PHPothèque</h2>
+        <p>Choisis un chapitre et apprends PHP à ton rythme.</p>
+    </section>
 
-<h1><?= $titrePrincipal ?></h1>
-<p><?= $para1 ?></p>
+    <section class="cartes">
+        <article class="carte">
+            <span>📖</span>
+            <h3>Le cours</h3>
+            <p>Des explications simples pour chaque notion.</p>
+        </article>
+        <article class="carte">
+            <span>✏️</span>
+            <h3>L'exercice</h3>
+            <p>Un exercice pour pratiquer.</p>
+        </article>
+        <article class="carte">
+            <span>✅</span>
+            <h3>La correction</h3>
+            <p>Pour vérifier ta solution.</p>
+        </article>
+    </section>
 
-<h2>Voici mes compétences</h2>
-<ul>
-    <?php foreach ($competences as $competence): ?>
-        <li><?= $competence ?></li>
-    <?php endforeach; ?>
-
-    <?php if($ilPleut): ?>
-        <p>Il pleut</p>
-    <?php else: ?>
-        <p>Il pleut pas</p>
-    <?php endif; ?>
-</ul>
-
-<?php 
-// On importe le "bas" de la page
-require_once 'partiel/footer.php'; ?>
+    <p style="text-align: center;"><a class="bouton" href="liste.php">Voir les chapitres</a></p>
+<?php });

@@ -1,0 +1,32 @@
+.etagere {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 15px;
+}
+
+.livre {
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 6px 12px 12px 6px;
+  border-left: 12px solid rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 10px;
+  line-height: 1.35;
+  margin: 0;
+  transition: transform 0.2s;
+}
+
+.livre:hover {
+  transform: translateY(-8px) rotate(-2deg);
+}
+
+@media (max-width: 600px) {
+  .etagere {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
