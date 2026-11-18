@@ -1,1 +1,3 @@
 feuille-de-route/
+vendor/
+.phpunit.cache/

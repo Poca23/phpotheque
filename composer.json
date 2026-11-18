@@ -1,0 +1,6 @@
+{
+    "name": "claire/phpotheque",
+    "require-dev": {
+        "phpunit/phpunit": "^12.5"
+    }
+}
