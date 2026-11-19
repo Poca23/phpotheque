@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class PagesTest extends TestCase
+class AffichageTest extends TestCase
 {
     private function rendre($page)
     {
