@@ -2,9 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../inc/fonctions.php';
+require_once __DIR__ . '/../inc/pages.php';
 
-class FonctionsTest extends TestCase
+class PagesTest extends TestCase
 {
     public function testChaqueFonctionRetourneTitreEtCss()
     {
