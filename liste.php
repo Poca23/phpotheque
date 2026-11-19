@@ -3,9 +3,8 @@
 require_once 'inc/main.php';
 require_once 'inc/vues.php';
 
-[$titre, $css] = liste();
+afficherPage('liste', function () { ?>
 
-afficherPage($titre, $css, function () { ?>
     <h2>Les chapitres</h2>
     <ul class="etagere">
         <?php foreach (chapitres() as $chapitre): ?>

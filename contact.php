@@ -3,9 +3,8 @@
 require_once 'inc/main.php';
 require_once 'inc/vues.php';
 
-[$titre, $css] = contact();
+afficherPage('contact', function () { ?>
 
-afficherPage($titre, $css, function () { ?>
     <h2>Contact</h2>
     <form class="formulaire" method="post">
         <label for="nom">Nom</label>
