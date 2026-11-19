@@ -14,6 +14,7 @@ avec un `foreach`.
 ```
 .
 ├── index.php
+├── 500.php
 ├── liste.php
 ├── contact.php
 ├── css/
@@ -25,9 +26,10 @@ avec un `foreach`.
 │   ├── liste.css
 │   └── contact.css
 ├── inc/
+│   ├── base.php
 │   ├── main.php
 │   ├── vues.php
-│   ├── fonctions.php
+│   ├── pages.php
 │   └── chapitres.php
 ├── partiel/
 │   ├── header.php
@@ -38,11 +40,11 @@ avec un `foreach`.
 
 ## Les trois « main »
 
-| Main            | Fichier        | Rôle                                                  |
-| --------------- | -------------- | ----------------------------------------------------- |
-| CSS             | `css/main.css` | importe tous les autres CSS                           |
-| Fonctionnalités | `inc/main.php` | charge `fonctions.php` et `chapitres.php`             |
-| Vues            | `inc/vues.php` | `afficherPage()` : header, contenu de la page, footer |
+| Main            | Fichier        | Rôle                                                            |
+| --------------- | -------------- | --------------------------------------------------------------- |
+| CSS             | `css/main.css` | importe tous les autres CSS                                     |
+| Fonctionnalités | `inc/main.php` | charge `base.php`, `pages.php` et `chapitres.php`               |
+| Vues            | `inc/vues.php` | `afficherPage('page', fn)` : header, contenu de la page, footer |
 
 ## Code clé
 
@@ -53,11 +55,8 @@ php
 require_once 'inc/main.php';
 require_once 'inc/vues.php';
 
-[$titre, $ css] = liste();
-
-afficherPage( $ titre, $css, function () { ?>
-...contenu de la page...
-
+afficherPage('liste', function () { ?>
+    ...contenu de la page...
 <?php });
 ```
 
@@ -97,6 +96,10 @@ relancer (il réussit).
 - Une fonction anonyme transmise à `afficherPage()` fournit le contenu de la page.
 - `__DIR__` rend les chemins de `require` fiables, d'où que le fichier soit appelé.
 - Le responsive se fait avec `@media (max-width: 600px)` dans chaque CSS concerné.
+- `base()` évite de répéter `__DIR__` dans tous les `require`.
+- `afficherPage()` appelle elle-même la fonction de la page : moins de répétition.
+- `try/catch` avec `ob_start` affiche une page 500 propre en cas d'erreur.
+- Un workflow GitHub Actions lance les tests à chaque push.
 
 ## Statut
 
