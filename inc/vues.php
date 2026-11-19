@@ -1,8 +1,10 @@
 <?php
 
+require_once __DIR__ . '/base.php';
+
 function afficherPage($titre, $css, $contenu)
 {
-    require __DIR__ . '/../partiel/header.php';
+    require base('partiel/header.php');
     $contenu();
-    require __DIR__ . '/../partiel/footer.php';
+    require base('partiel/footer.php');
 }

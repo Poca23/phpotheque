@@ -1,13 +1,14 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+require_once __DIR__ . '/../inc/base.php';
 
 class AffichageTest extends TestCase
 {
     private function rendre($page)
     {
         ob_start();
-        require __DIR__ . '/../' . $page;
+        require base($page);
         return ob_get_clean();
     }
 

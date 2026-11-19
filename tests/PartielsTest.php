@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+require_once __DIR__ . '/../inc/base.php';
 
 class PartielsTest extends TestCase
 {
@@ -10,7 +11,7 @@ class PartielsTest extends TestCase
         $css = ['main.css'];
 
         ob_start();
-        require __DIR__ . '/../partiel/header.php';
+        require base('partiel/header.php');
         $html = ob_get_clean();
 
         $this->assertStringContainsString('<title>Mon titre</title>', $html);
@@ -24,7 +25,7 @@ class PartielsTest extends TestCase
     public function testFooterContientLeCredit()
     {
         ob_start();
-        require __DIR__ . '/../partiel/footer.php';
+        require base('partiel/footer.php');
         $html = ob_get_clean();
 
         $this->assertStringContainsString('CND - Web Is Yours', $html);
