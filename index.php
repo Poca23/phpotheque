@@ -3,9 +3,8 @@
 require_once 'inc/main.php';
 require_once 'inc/vues.php';
 
-[$titre, $css] = accueil();
+afficherPage('accueil', function () { ?>
 
-afficherPage($titre, $css, function () { ?>
     <section class="intro">
         <h2>Bienvenue à la PHPothèque</h2>
         <p>Choisis un chapitre et apprends PHP à ton rythme.</p>

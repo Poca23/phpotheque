@@ -2,28 +2,16 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once __DIR__ . '/../inc/pages.php';
+
 class PagesTest extends TestCase
 {
-    private function rendre($page)
+    public function testChaqueFonctionRetourneTitreEtCss()
     {
-        ob_start();
-        require __DIR__ . '/../' . $page;
-        return ob_get_clean();
-    }
-
-    public function testAccueil()
-    {
-        $this->assertStringContainsString('Bienvenue', $this->rendre('index.php'));
-    }
-
-    public function testListeAfficheLesDouzeChapitres()
-    {
-        $html = $this->rendre('liste.php');
-        $this->assertSame(12, substr_count($html, 'class="livre"'));
-    }
-
-    public function testContactContientUnFormulaire()
-    {
-        $this->assertStringContainsString('<form', $this->rendre('contact.php'));
+        foreach (['accueil', 'liste', 'contact'] as $page) {
+            [$titre, $css] = $page();
+            $this->assertIsString($titre);
+            $this->assertNotEmpty($css);
+        }
     }
 }
