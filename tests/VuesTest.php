@@ -19,4 +19,15 @@ class VuesTest extends TestCase
         $this->assertStringContainsString('<p>Contenu test</p>', $html);
         $this->assertStringContainsString('CND - Web Is Yours', $html);
     }
+
+    public function testAfficherPageAffichePage500EnCasDErreur()
+    {
+        ob_start();
+        afficherPage('contact', function () {
+            throw new Exception('Erreur test');
+        });
+        $html = ob_get_clean();
+
+        $this->assertStringContainsString('Erreur 500', $html);
+    }
 }
