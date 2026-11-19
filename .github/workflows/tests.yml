@@ -1,0 +1,93 @@
+# Structure de ce fichier :
+# - Un workflow possède :
+#   - un nom
+#   - des déclencheurs
+#   - des opérations (jobs)
+# - Chaque job possède :
+#   - des actions (définies par leur nom)
+# - Chaque action possède :
+#   - des étapes (séquentielles)
+
+# Avec un schéma :
+# +---------------+          +----------+ - Etape 1
+# |  Un workflow  | --+----> |   Job 1  | - Etape 2
+# +---------------+   |      +----------+ - Etape 3
+#                     |
+#                     |      +----------+
+#                     +----> |   Job 2  | - Etape 1
+#                            +----------+ - Etape 2
+
+# Ce job plantera si une action plante.
+# Une action plante si une de ses étapes plantent.
+
+# === Objectif de ce workflow ===
+# Quand on modifie du code PHP, et qu'on push ce code, les
+# tests phpunit sont lancés. Le workflow plante si les tests
+# ne passent pas.
+
+# === Définition du workflow ===
+# Nom du workflow.
+name: Test
+# Se déclenche de deux manières :
+on:
+  # Soit anuellement
+  workflow_dispatch:
+  # Soit automatiquement au push, si un de ces dossiers est concerné
+  push:
+    paths:
+      - inc/**
+      - partiel/**
+      - tests/**
+      - composer.json
+
+# Dans ce workflow, il peut y avoir plusieurs jobs
+# Ici, il n'y en a qu'un
+jobs:
+  # Ce job s'appelle "Test", parce qu'il va lancer les tests
+  test:
+    # Ce job est exécuté sur une plateforme.
+    # Si l'on veut lancer les tests plusieurs plate-formes,
+    # il faut en fait plusieurs jobs. Il faudrait renommer
+    # ce job "test-ubuntu" par exemple, et ajouter un autre
+    # job nommé "test-windows" par exemple.
+    runs-on: ubuntu-latest
+    # Les étapes du job
+    steps:
+      # Récupère le code de ce dépôt
+      # Appelle cette action : https://github.com/actions/checkout
+      # Note : il y a des versions (le @v7). Une pipeline se met
+      # à jour aussi en mettant à jour ses différentes actions.
+      - uses: actions/checkout@v7
+
+      # Télécharge PHP : https://github.com/shivammathur/setup-php
+      # Comme l'action n'est pas très claire à la lecture, on ajoute
+      # un `name` pour la rendre plus lisible dans la pipeline.
+      # Certaines actions peuvent avoir des arguments. Dans ce cas,
+      # on les précise avec `with`.
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      # Installe les dépendances de Composer
+      # Les actions ne sont pas forcément des dépôts GitHub comme
+      # vues plus haut : elles peuvent être de simples commandes.
+      # Dans ce cas, on utilise `run` et non pas `uses`.
+      # Par contre, ces commandes ne doivent pas "attendre" de commandes,
+      # et c'est mieux si elles ne font pas trop d'affichage : ça ne
+      # fait que polluer les logs, surtout dans le cas de composer.
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      # Réalise les tests
+      # Cette commande pourrait être `phpunit tests`, avec différents
+      # arguments si besoin. Pour simplifier la lisibilité du workflow,
+      # et pour faciliter l'appel dans l'environnement de dev, on
+      # crée une commande composer nommée `test` avec tous les bons
+      # arguments, et on appelle juste cette commande ici.
+      # C'est réellement cette étape qui nous importe : si les tests
+      # déclenchent des erreurs, alors le code de sortie du programme
+      # sera 1. Dans ce cas, l'étape échouera, donc le job échouera,
+      # donc le workflow échouera.
+      - name: Test
+        run: composer test
